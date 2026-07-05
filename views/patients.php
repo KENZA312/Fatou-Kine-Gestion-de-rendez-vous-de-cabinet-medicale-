@@ -37,50 +37,62 @@ $motCle = trim($_GET['recherche'] ?? '');
 $patients = $motCle !== '' ? $patientManager->rechercher($motCle) : $patientManager->lister();
 ?>
 
-<h2>Patients</h2>
+<div class="entete-page">
+    <h2>Patients</h2>
+    <p class="sous-titre"><?= count($patients) ?> patient(s) enregistre(s)</p>
+</div>
 
-<form method="get" action="index.php">
-    <input type="hidden" name="page" value="patients">
-    <label>Rechercher un patient par nom
-        <input type="text" name="recherche" value="<?= htmlspecialchars($motCle) ?>" placeholder="Ex: Diop">
-    </label>
-    <button type="submit">Rechercher</button>
-</form>
+<section class="carte">
+    <form method="get" action="index.php" class="form-recherche">
+        <input type="hidden" name="page" value="patients">
+        <label>Rechercher un patient par nom
+            <input type="text" name="recherche" value="<?= htmlspecialchars($motCle) ?>" placeholder="Ex: Diop">
+        </label>
+        <button type="submit" class="bouton-ghost">Rechercher</button>
+    </form>
+</section>
 
-<form method="post" action="index.php?page=patients">
-    <?php if ($patientAModifier): ?>
-        <input type="hidden" name="id" value="<?= $patientAModifier->getId() ?>">
-    <?php endif; ?>
-    <label>Nom
-        <input type="text" name="nom" value="<?= htmlspecialchars($patientAModifier ? $patientAModifier->getNom() : '') ?>" required>
-    </label>
-    <label>Telephone
-        <input type="text" name="telephone" value="<?= htmlspecialchars($patientAModifier ? $patientAModifier->getTelephone() : '') ?>" required>
-    </label>
-    <button type="submit"><?= $patientAModifier ? 'Modifier le patient' : 'Ajouter le patient' ?></button>
-</form>
-
-<table>
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Telephone</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($patients as $patient): ?>
-        <tr>
-            <td><?= htmlspecialchars($patient->getNom()) ?></td>
-            <td><?= htmlspecialchars($patient->getTelephone()) ?></td>
-            <td>
-                <a class="bouton" href="index.php?page=patients&modifier=<?= $patient->getId() ?>">Modifier</a>
-                <a class="bouton bouton-danger" href="index.php?page=patients&supprimer=<?= $patient->getId() ?>" onclick="return confirm('Supprimer ce patient ?')">Supprimer</a>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-        <?php if (empty($patients)): ?>
-        <tr><td colspan="3">Aucun patient trouve.</td></tr>
+<section class="carte">
+    <h3><?= $patientAModifier ? 'Modifier le patient' : 'Ajouter un patient' ?></h3>
+    <form method="post" action="index.php?page=patients" class="form-grille">
+        <?php if ($patientAModifier): ?>
+            <input type="hidden" name="id" value="<?= $patientAModifier->getId() ?>">
         <?php endif; ?>
-    </tbody>
-</table>
+        <label>Nom
+            <input type="text" name="nom" value="<?= htmlspecialchars($patientAModifier ? $patientAModifier->getNom() : '') ?>" required>
+        </label>
+        <label>Telephone
+            <input type="text" name="telephone" value="<?= htmlspecialchars($patientAModifier ? $patientAModifier->getTelephone() : '') ?>" required>
+        </label>
+        <button type="submit"><?= $patientAModifier ? 'Modifier le patient' : 'Ajouter le patient' ?></button>
+    </form>
+</section>
+
+<section class="carte carte-tableau">
+    <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Telephone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($patients as $patient): ?>
+                <tr>
+                    <td><?= htmlspecialchars($patient->getNom()) ?></td>
+                    <td><?= htmlspecialchars($patient->getTelephone()) ?></td>
+                    <td class="cellule-actions">
+                        <a class="bouton" href="index.php?page=patients&modifier=<?= $patient->getId() ?>">Modifier</a>
+                        <a class="bouton bouton-danger" href="index.php?page=patients&supprimer=<?= $patient->getId() ?>" onclick="return confirm('Supprimer ce patient ?')">Supprimer</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <?php if (empty($patients)): ?>
+                <tr><td colspan="3" class="etat-vide">Aucun patient trouve.</td></tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -67,75 +67,87 @@ function nomPraticien(array $praticiens, int $id): string
 }
 ?>
 
-<h2>Rendez-vous</h2>
+<div class="entete-page">
+    <h2>Rendez-vous</h2>
+    <p class="sous-titre"><?= count($rendezVousListe) ?> rendez-vous <?= $dateFiltre !== '' ? 'le ' . htmlspecialchars($dateFiltre) : 'au total' ?></p>
+</div>
 
-<form method="post" action="index.php?page=rendezvous">
-    <label>Patient
-        <select name="patient_id" required>
-            <option value="">-- Choisir un patient --</option>
-            <?php foreach ($patients as $patient): ?>
-                <option value="<?= $patient->getId() ?>"><?= htmlspecialchars($patient->getNom()) ?></option>
-            <?php endforeach; ?>
-        </select>
-    </label>
-    <label>Praticien
-        <select name="praticien_id" required>
-            <option value="">-- Choisir un praticien --</option>
-            <?php foreach ($praticiens as $praticien): ?>
-                <option value="<?= $praticien->getId() ?>"><?= htmlspecialchars($praticien->getNom()) ?></option>
-            <?php endforeach; ?>
-        </select>
-    </label>
-    <label>Date
-        <input type="date" name="date_rdv" required>
-    </label>
-    <label>Heure
-        <input type="time" name="heure_rdv" required>
-    </label>
-    <label>Motif
-        <input type="text" name="motif" placeholder="Ex: Controle general">
-    </label>
-    <button type="submit">Planifier le rendez-vous</button>
-</form>
+<section class="carte">
+    <h3>Planifier un rendez-vous</h3>
+    <form method="post" action="index.php?page=rendezvous" class="form-grille">
+        <label>Patient
+            <select name="patient_id" required>
+                <option value="">-- Choisir un patient --</option>
+                <?php foreach ($patients as $patient): ?>
+                    <option value="<?= $patient->getId() ?>"><?= htmlspecialchars($patient->getNom()) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </label>
+        <label>Praticien
+            <select name="praticien_id" required>
+                <option value="">-- Choisir un praticien --</option>
+                <?php foreach ($praticiens as $praticien): ?>
+                    <option value="<?= $praticien->getId() ?>"><?= htmlspecialchars($praticien->getNom()) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </label>
+        <label>Date
+            <input type="date" name="date_rdv" required>
+        </label>
+        <label>Heure
+            <input type="time" name="heure_rdv" required>
+        </label>
+        <label class="label-large">Motif
+            <input type="text" name="motif" placeholder="Ex: Controle general">
+        </label>
+        <button type="submit">Planifier le rendez-vous</button>
+    </form>
+</section>
 
-<form method="get" action="index.php">
-    <input type="hidden" name="page" value="rendezvous">
-    <label>Filtrer par date
-        <input type="date" name="date" value="<?= htmlspecialchars($dateFiltre) ?>">
-    </label>
-    <button type="submit">Filtrer</button>
-    <a class="bouton" href="index.php?page=rendezvous">Tout afficher</a>
-</form>
+<section class="carte">
+    <form method="get" action="index.php" class="form-recherche">
+        <input type="hidden" name="page" value="rendezvous">
+        <label>Filtrer par date
+            <input type="date" name="date" value="<?= htmlspecialchars($dateFiltre) ?>">
+        </label>
+        <button type="submit" class="bouton-ghost">Filtrer</button>
+        <a class="bouton-lien" href="index.php?page=rendezvous">Tout afficher</a>
+    </form>
+</section>
 
-<table>
-    <thead>
-        <tr>
-            <th>Patient</th>
-            <th>Praticien</th>
-            <th>Date</th>
-            <th>Heure</th>
-            <th>Motif</th>
-            <th>Statut</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($rendezVousListe as $rdv): ?>
-        <tr>
-            <td><?= htmlspecialchars(nomPatient($patients, $rdv->getPatientId())) ?></td>
-            <td><?= htmlspecialchars(nomPraticien($praticiens, $rdv->getPraticienId())) ?></td>
-            <td><?= htmlspecialchars($rdv->getDateRdv()) ?></td>
-            <td><?= htmlspecialchars($rdv->getHeureRdv()) ?></td>
-            <td><?= htmlspecialchars($rdv->getMotif() ?? '') ?></td>
-            <td><span class="statut-<?= htmlspecialchars($rdv->getStatut()) ?>"><?= htmlspecialchars($rdv->getStatut()) ?></span></td>
-            <td>
-                <a class="bouton" href="index.php?page=rendezvous&confirmer=<?= $rdv->getId() ?>">Confirmer</a>
-                <a class="bouton bouton-danger" href="index.php?page=rendezvous&annuler=<?= $rdv->getId() ?>" onclick="return confirm('Annuler ce rendez-vous ?')">Annuler</a>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-        <?php if (empty($rendezVousListe)): ?>
-        <tr><td colspan="7">Aucun rendez-vous trouve.</td></tr>
-        <?php endif; ?>
-    </tbody>
-</table>
+<section class="carte carte-tableau">
+    <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Praticien</th>
+                    <th>Date</th>
+                    <th>Heure</th>
+                    <th>Motif</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($rendezVousListe as $rdv): ?>
+                <tr>
+                    <td><?= htmlspecialchars(nomPatient($patients, $rdv->getPatientId())) ?></td>
+                    <td><?= htmlspecialchars(nomPraticien($praticiens, $rdv->getPraticienId())) ?></td>
+                    <td><?= htmlspecialchars($rdv->getDateRdv()) ?></td>
+                    <td><?= htmlspecialchars($rdv->getHeureRdv()) ?></td>
+                    <td><?= htmlspecialchars($rdv->getMotif() ?? '') ?></td>
+                    <td><span class="badge badge-<?= htmlspecialchars($rdv->getStatut()) ?>"><?= htmlspecialchars($rdv->getStatut()) ?></span></td>
+                    <td class="cellule-actions">
+                        <a class="bouton" href="index.php?page=rendezvous&confirmer=<?= $rdv->getId() ?>">Confirmer</a>
+                        <a class="bouton bouton-danger" href="index.php?page=rendezvous&annuler=<?= $rdv->getId() ?>" onclick="return confirm('Annuler ce rendez-vous ?')">Annuler</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <?php if (empty($rendezVousListe)): ?>
+                <tr><td colspan="7" class="etat-vide">Aucun rendez-vous trouve.</td></tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</section>

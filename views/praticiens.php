@@ -34,37 +34,47 @@ $praticienAModifier = isset($_GET['modifier']) ? $praticienManager->trouverParId
 $praticiens = $praticienManager->lister();
 ?>
 
-<h2>Praticiens</h2>
+<div class="entete-page">
+    <h2>Praticiens</h2>
+    <p class="sous-titre"><?= count($praticiens) ?> praticien(s) enregistre(s)</p>
+</div>
 
-<form method="post" action="index.php?page=praticiens">
-    <?php if ($praticienAModifier): ?>
-        <input type="hidden" name="id" value="<?= $praticienAModifier->getId() ?>">
-    <?php endif; ?>
-    <label>Nom
-        <input type="text" name="nom" value="<?= htmlspecialchars($praticienAModifier ? $praticienAModifier->getNom() : '') ?>" required>
-    </label>
-    <button type="submit"><?= $praticienAModifier ? 'Modifier le praticien' : 'Ajouter le praticien' ?></button>
-</form>
-
-<table>
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($praticiens as $praticien): ?>
-        <tr>
-            <td><?= htmlspecialchars($praticien->getNom()) ?></td>
-            <td>
-                <a class="bouton" href="index.php?page=praticiens&modifier=<?= $praticien->getId() ?>">Modifier</a>
-                <a class="bouton bouton-danger" href="index.php?page=praticiens&supprimer=<?= $praticien->getId() ?>" onclick="return confirm('Supprimer ce praticien ?')">Supprimer</a>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-        <?php if (empty($praticiens)): ?>
-        <tr><td colspan="2">Aucun praticien trouve.</td></tr>
+<section class="carte">
+    <h3><?= $praticienAModifier ? 'Modifier le praticien' : 'Ajouter un praticien' ?></h3>
+    <form method="post" action="index.php?page=praticiens" class="form-grille">
+        <?php if ($praticienAModifier): ?>
+            <input type="hidden" name="id" value="<?= $praticienAModifier->getId() ?>">
         <?php endif; ?>
-    </tbody>
-</table>
+        <label>Nom
+            <input type="text" name="nom" value="<?= htmlspecialchars($praticienAModifier ? $praticienAModifier->getNom() : '') ?>" required>
+        </label>
+        <button type="submit"><?= $praticienAModifier ? 'Modifier le praticien' : 'Ajouter le praticien' ?></button>
+    </form>
+</section>
+
+<section class="carte carte-tableau">
+    <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($praticiens as $praticien): ?>
+                <tr>
+                    <td><?= htmlspecialchars($praticien->getNom()) ?></td>
+                    <td class="cellule-actions">
+                        <a class="bouton" href="index.php?page=praticiens&modifier=<?= $praticien->getId() ?>">Modifier</a>
+                        <a class="bouton bouton-danger" href="index.php?page=praticiens&supprimer=<?= $praticien->getId() ?>" onclick="return confirm('Supprimer ce praticien ?')">Supprimer</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <?php if (empty($praticiens)): ?>
+                <tr><td colspan="2" class="etat-vide">Aucun praticien trouve.</td></tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
