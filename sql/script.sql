@@ -18,3 +18,19 @@ CREATE TABLE IF NOT EXISTS patient (
     nom VARCHAR(100) NOT NULL,
     telephone VARCHAR(20) NOT NULL
 ) ENGINE=InnoDB;
+
+-- Table des rendez-vous
+-- Un rendez-vous relie un patient a un praticien a une date/heure donnee
+CREATE TABLE IF NOT EXISTS rendezvous (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    praticien_id INT NOT NULL,
+    date_rdv DATE NOT NULL,
+    heure_rdv TIME NOT NULL,
+    motif VARCHAR(255),
+    statut ENUM('en_attente', 'confirme', 'annule') NOT NULL DEFAULT 'en_attente',
+    CONSTRAINT fk_rdv_patient FOREIGN KEY (patient_id) REFERENCES patient(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_rdv_praticien FOREIGN KEY (praticien_id) REFERENCES praticien(id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
