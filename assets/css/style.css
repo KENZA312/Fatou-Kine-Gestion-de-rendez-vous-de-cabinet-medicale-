@@ -1,0 +1,126 @@
+/* Style personnalise - Cabinet medical - Gestion des rendez-vous */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #2c3e3a;
+}
+
+header {
+    background-color: #1f6f5c;
+    color: #ffffff;
+    padding: 1rem 2rem;
+}
+
+header h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.4rem;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-right: 1.2rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+}
+
+nav a:hover {
+    background-color: #17594a;
+}
+
+main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+h2 {
+    color: #1f6f5c;
+    border-bottom: 2px solid #d8e6e2;
+    padding-bottom: 0.4rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+th, td {
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid #e4e9e8;
+}
+
+th {
+    background-color: #e9f2ef;
+    color: #1f6f5c;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.9rem;
+}
+
+form input,
+form select {
+    display: block;
+    width: 100%;
+    margin-top: 0.3rem;
+    padding: 0.5rem;
+    border: 1px solid #c7d3d0;
+    border-radius: 4px;
+}
+
+button, .bouton {
+    background-color: #1f6f5c;
+    color: #ffffff;
+    border: none;
+    padding: 0.55rem 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover, .bouton:hover {
+    background-color: #17594a;
+}
+
+.bouton-danger {
+    background-color: #b3413d;
+}
+
+.bouton-danger:hover {
+    background-color: #932d29;
+}
+
+.statut-confirme {
+    color: #1f6f5c;
+    font-weight: bold;
+}
+
+.statut-en_attente {
+    color: #b58900;
+    font-weight: bold;
+}
+
+.statut-annule {
+    color: #b3413d;
+    font-weight: bold;
+}
