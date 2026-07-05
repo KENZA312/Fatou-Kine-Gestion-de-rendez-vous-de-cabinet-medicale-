@@ -11,6 +11,13 @@ if (!in_array($page, $pagesAutorisees, true)) {
 }
 
 $cheminVue = __DIR__ . '/../views/' . $page . '.php';
+
+$liensNav = [
+    'accueil' => ['icone' => 'tableau-de-bord', 'label' => 'Tableau de bord'],
+    'patients' => ['icone' => 'patients', 'label' => 'Patients'],
+    'praticiens' => ['icone' => 'praticiens', 'label' => 'Praticiens'],
+    'rendezvous' => ['icone' => 'rendezvous', 'label' => 'Rendez-vous'],
+];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -21,21 +28,32 @@ $cheminVue = __DIR__ . '/../views/' . $page . '.php';
     <link rel="stylesheet" href="/Gestion-de-rendez-vous/assets/css/style.css">
 </head>
 <body>
-    <header>
-        <div class="entete">
-            <span class="logo">&#9678;</span>
-            <h1>Cabinet medical<span>Gestion des rendez-vous</span></h1>
-        </div>
-        <nav>
-            <a href="?page=accueil" class="<?= $page === 'accueil' ? 'actif' : '' ?>">Accueil</a>
-            <a href="?page=patients" class="<?= $page === 'patients' ? 'actif' : '' ?>">Patients</a>
-            <a href="?page=praticiens" class="<?= $page === 'praticiens' ? 'actif' : '' ?>">Praticiens</a>
-            <a href="?page=rendezvous" class="<?= $page === 'rendezvous' ? 'actif' : '' ?>">Rendez-vous</a>
-        </nav>
-    </header>
+    <?php require __DIR__ . '/../views/_icones.php'; ?>
 
-    <main>
-        <?php require $cheminVue; ?>
-    </main>
+    <div class="app">
+        <aside class="barre-laterale">
+            <div class="marque">
+                <span class="marque-pastille">CM</span>
+                <div class="marque-texte">
+                    <strong>Cabinet medical</strong>
+                    <span>Gestion des rendez-vous</span>
+                </div>
+            </div>
+            <nav>
+                <?php foreach ($liensNav as $cle => $lien): ?>
+                    <a href="?page=<?= $cle ?>" class="<?= $page === $cle ? 'actif' : '' ?>">
+                        <svg class="icone"><use href="#icone-<?= $lien['icone'] ?>"></use></svg>
+                        <?= $lien['label'] ?>
+                    </a>
+                <?php endforeach; ?>
+            </nav>
+        </aside>
+
+        <div class="contenu">
+            <main>
+                <?php require $cheminVue; ?>
+            </main>
+        </div>
+    </div>
 </body>
 </html>
