@@ -48,7 +48,10 @@ $patients = $motCle !== '' ? $patientManager->rechercher($motCle) : $patientMana
         <label>Rechercher un patient par nom
             <input type="text" name="recherche" value="<?= htmlspecialchars($motCle) ?>" placeholder="Ex: Diop">
         </label>
-        <button type="submit" class="bouton-ghost">Rechercher</button>
+        <button type="submit" class="bouton-ghost">
+            <svg class="icone"><use href="#icone-recherche"></use></svg>
+            Rechercher
+        </button>
     </form>
 </section>
 
@@ -64,7 +67,10 @@ $patients = $motCle !== '' ? $patientManager->rechercher($motCle) : $patientMana
         <label>Telephone
             <input type="text" name="telephone" value="<?= htmlspecialchars($patientAModifier ? $patientAModifier->getTelephone() : '') ?>" required>
         </label>
-        <button type="submit"><?= $patientAModifier ? 'Modifier le patient' : 'Ajouter le patient' ?></button>
+        <button type="submit">
+            <svg class="icone"><use href="#icone-<?= $patientAModifier ? 'modifier' : 'ajouter' ?>"></use></svg>
+            <?= $patientAModifier ? 'Modifier le patient' : 'Ajouter le patient' ?>
+        </button>
     </form>
 </section>
 
@@ -84,8 +90,14 @@ $patients = $motCle !== '' ? $patientManager->rechercher($motCle) : $patientMana
                     <td><?= htmlspecialchars($patient->getNom()) ?></td>
                     <td><?= htmlspecialchars($patient->getTelephone()) ?></td>
                     <td class="cellule-actions">
-                        <a class="bouton" href="index.php?page=patients&modifier=<?= $patient->getId() ?>">Modifier</a>
-                        <a class="bouton bouton-danger" href="index.php?page=patients&supprimer=<?= $patient->getId() ?>" onclick="return confirm('Supprimer ce patient ?')">Supprimer</a>
+                        <a class="bouton bouton-secondaire bouton-petit" href="index.php?page=patients&modifier=<?= $patient->getId() ?>">
+                            <svg class="icone"><use href="#icone-modifier"></use></svg>
+                            Modifier
+                        </a>
+                        <a class="bouton bouton-danger bouton-petit" href="index.php?page=patients&supprimer=<?= $patient->getId() ?>" onclick="return confirm('Supprimer ce patient ?')">
+                            <svg class="icone"><use href="#icone-supprimer"></use></svg>
+                            Supprimer
+                        </a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

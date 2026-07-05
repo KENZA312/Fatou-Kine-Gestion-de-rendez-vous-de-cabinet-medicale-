@@ -1,5 +1,10 @@
 <?php
 
+// Mise en tampon de toute la sortie : permet aux vues d'appeler header() pour
+// rediriger (apres un ajout/une modification/une suppression) meme si du HTML
+// a deja ete affiche avant elles (sidebar, sprite d'icones...).
+ob_start();
+
 // Point d'entree unique de l'application (front controller).
 // La page a afficher est choisie via le parametre GET "page".
 

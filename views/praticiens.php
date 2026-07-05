@@ -48,7 +48,10 @@ $praticiens = $praticienManager->lister();
         <label>Nom
             <input type="text" name="nom" value="<?= htmlspecialchars($praticienAModifier ? $praticienAModifier->getNom() : '') ?>" required>
         </label>
-        <button type="submit"><?= $praticienAModifier ? 'Modifier le praticien' : 'Ajouter le praticien' ?></button>
+        <button type="submit">
+            <svg class="icone"><use href="#icone-<?= $praticienAModifier ? 'modifier' : 'ajouter' ?>"></use></svg>
+            <?= $praticienAModifier ? 'Modifier le praticien' : 'Ajouter le praticien' ?>
+        </button>
     </form>
 </section>
 
@@ -66,8 +69,14 @@ $praticiens = $praticienManager->lister();
                 <tr>
                     <td><?= htmlspecialchars($praticien->getNom()) ?></td>
                     <td class="cellule-actions">
-                        <a class="bouton" href="index.php?page=praticiens&modifier=<?= $praticien->getId() ?>">Modifier</a>
-                        <a class="bouton bouton-danger" href="index.php?page=praticiens&supprimer=<?= $praticien->getId() ?>" onclick="return confirm('Supprimer ce praticien ?')">Supprimer</a>
+                        <a class="bouton bouton-secondaire bouton-petit" href="index.php?page=praticiens&modifier=<?= $praticien->getId() ?>">
+                            <svg class="icone"><use href="#icone-modifier"></use></svg>
+                            Modifier
+                        </a>
+                        <a class="bouton bouton-danger bouton-petit" href="index.php?page=praticiens&supprimer=<?= $praticien->getId() ?>" onclick="return confirm('Supprimer ce praticien ?')">
+                            <svg class="icone"><use href="#icone-supprimer"></use></svg>
+                            Supprimer
+                        </a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

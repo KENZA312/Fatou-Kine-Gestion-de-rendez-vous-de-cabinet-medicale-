@@ -100,7 +100,10 @@ function nomPraticien(array $praticiens, int $id): string
         <label class="label-large">Motif
             <input type="text" name="motif" placeholder="Ex: Controle general">
         </label>
-        <button type="submit">Planifier le rendez-vous</button>
+        <button type="submit">
+            <svg class="icone"><use href="#icone-ajouter"></use></svg>
+            Planifier le rendez-vous
+        </button>
     </form>
 </section>
 
@@ -110,7 +113,10 @@ function nomPraticien(array $praticiens, int $id): string
         <label>Filtrer par date
             <input type="date" name="date" value="<?= htmlspecialchars($dateFiltre) ?>">
         </label>
-        <button type="submit" class="bouton-ghost">Filtrer</button>
+        <button type="submit" class="bouton-ghost">
+            <svg class="icone"><use href="#icone-recherche"></use></svg>
+            Filtrer
+        </button>
         <a class="bouton-lien" href="index.php?page=rendezvous">Tout afficher</a>
     </form>
 </section>
